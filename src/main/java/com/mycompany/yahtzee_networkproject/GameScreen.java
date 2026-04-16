@@ -4,17 +4,23 @@
  */
 package com.mycompany.yahtzee_networkproject;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 /**
  *
  * @author USER
  */
 public class GameScreen extends javax.swing.JFrame {
     GameLogic game = new GameLogic();
+    //if i create it in constructor roll_btn can not reach 
+    JButton[]buttons;
     /**
      * Creates new form GameScreen
      */
     public GameScreen() {
         initComponents();
+       buttons=new JButton[]{btn_dice1,btn_dice2,btn_dice3,btn_dice4,btn_dice5};
     }
 
     /**
@@ -82,13 +88,13 @@ public class GameScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(122, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_dice1)
-                        .addGap(18, 18, 18)
+                        .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
                         .addComponent(btn_dice2)
                         .addGap(18, 18, 18)
                         .addComponent(btn_dice3)
@@ -96,12 +102,12 @@ public class GameScreen extends javax.swing.JFrame {
                         .addComponent(btn_dice4)
                         .addGap(18, 18, 18)
                         .addComponent(btn_dice5)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGap(92, 92, 92))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(319, Short.MAX_VALUE)
+                .addContainerGap(302, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_dice2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -110,7 +116,7 @@ public class GameScreen extends javax.swing.JFrame {
                     .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(46, 46, 46))
         );
 
         pack();
@@ -137,25 +143,20 @@ public class GameScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_dice5ActionPerformed
 
     private void btn_rollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rollActionPerformed
-
+        //System.out.println(getClass().getClassLoader().getResource("/images/1.png"));
         game.rollCount();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i <buttons.length ; i++) {
             //game.dice=  return object but we want arraylist then .dices
-            switch (game.dice.dices[i]) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                default:
-                    break;
+            //choose frrom 1-6 store in DiceNum
+            int DiceNum=game.dice.dices[i];
+            //bring the photo based on DiceNum
+            //ImageIcon icon = new ImageIcon(getClass().getResource("/images/" + DiceNum + ".png"));
+            //set the photo in their spicific dice 
+            //buttons[i].setIcon(icon);
+            buttons[i].setText(""+DiceNum);//because it is accept string only
+            //close the button after 5th try
+            if(game.rollcounter==5){
+            btn_roll.setEnabled(false);
             }
         }
     }//GEN-LAST:event_btn_rollActionPerformed
