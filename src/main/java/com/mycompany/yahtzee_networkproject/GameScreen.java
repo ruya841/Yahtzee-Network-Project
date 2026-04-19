@@ -4,6 +4,7 @@
  */
 package com.mycompany.yahtzee_networkproject;
 
+import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -15,14 +16,36 @@ public class GameScreen extends javax.swing.JFrame {
     GameLogic game = new GameLogic();
     //if i create it in constructor roll_btn can not reach 
     JButton[]buttons;
+    
+    //hold selected buttons 
+    public void selectedButtons() {
+        for (int i = 0; i < buttons.length; i++) {
+            // game.dice.held[i] gave error because (الاي بتتغير كل شويه وهو عايز حاجه ثابته فا خزنتها)
+            int index = i;
+            //once button clicked:
+            buttons[i].addActionListener(e -> {
+                boolean hold =  game.dice.held[index];
+                if(hold==true){
+                   hold=false;
+                   buttons[index].setBackground(null);
+                }else if(hold==false){
+                    hold=true;
+                        buttons[index].setBackground(Color.blue);
+                }
+                game.dice.held[index]=hold; 
+            });
+        }
+    }
+    
     /**
      * Creates new form GameScreen
      */
     public GameScreen() {
         initComponents();
        buttons=new JButton[]{btn_dice1,btn_dice2,btn_dice3,btn_dice4,btn_dice5};
+       selectedButtons();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,30 +112,31 @@ public class GameScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(122, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(123, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(btn_dice2)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_dice3)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_dice4)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_dice5)))
-                .addGap(92, 92, 92))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_dice2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_dice3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_dice4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(302, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_dice2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_dice3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_dice4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_dice3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_dice2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_dice4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,6 +183,16 @@ public class GameScreen extends javax.swing.JFrame {
             btn_roll.setEnabled(false);
             }
         }
+        //when all dices seleced client can't press roll button again
+        boolean allHeld=true;
+        for (int i = 0; i < game.dice.held.length; i++) {
+            if(game.dice.held[i]==false){
+                allHeld=false;
+            }
+        }
+        if(allHeld==true){
+            btn_roll.setEnabled(false);
+        }
     }//GEN-LAST:event_btn_rollActionPerformed
 
     /**
@@ -187,7 +221,6 @@ public class GameScreen extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
