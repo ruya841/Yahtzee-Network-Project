@@ -7,6 +7,7 @@ package com.mycompany.yahtzee_networkproject;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,7 +17,6 @@ public class GameScreen extends javax.swing.JFrame {
     GameLogic game = new GameLogic();
     //if i create it in constructor roll_btn can not reach 
     JButton[]buttons;
-    
     //hold selected buttons 
     public void selectedButtons() {
         for (int i = 0; i < buttons.length; i++) {
@@ -44,7 +44,9 @@ public class GameScreen extends javax.swing.JFrame {
         initComponents();
        buttons=new JButton[]{btn_dice1,btn_dice2,btn_dice3,btn_dice4,btn_dice5};
        selectedButtons();
+       DefaultTableModel tableModel = (DefaultTableModel)score_table.getModel();//take a copy from my table
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,6 +63,9 @@ public class GameScreen extends javax.swing.JFrame {
         btn_dice4 = new javax.swing.JButton();
         btn_dice5 = new javax.swing.JButton();
         btn_roll = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        score_table = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
@@ -107,12 +112,48 @@ public class GameScreen extends javax.swing.JFrame {
             }
         });
 
+        score_table.setBackground(new java.awt.Color(0, 0, 51));
+        score_table.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        score_table.setForeground(new java.awt.Color(255, 255, 255));
+        score_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Ones", null, null},
+                {"Twos", null, null},
+                {"Threes", null, null},
+                {"Fours", null, null},
+                {"Fives", null, null},
+                {"Sixes", null, null},
+                {"Sum", null, null},
+                {"Bonus", null, null},
+                {"Three of a kind", null, null},
+                {"Four of a kind", null, null},
+                {"Full house", null, null},
+                {"Small straight", null, null},
+                {"Large straight", null, null},
+                {"Chance", null, null},
+                {"Yahtzee", null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Rolls", "Player1", "Player2"
+            }
+        ));
+        score_table.setToolTipText("");
+        score_table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        score_table.setGridColor(new java.awt.Color(255, 255, 255));
+        score_table.setName(""); // NOI18N
+        score_table.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(score_table);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(123, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -123,24 +164,33 @@ public class GameScreen extends javax.swing.JFrame {
                         .addComponent(btn_dice3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_dice4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(79, 79, 79))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(54, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(302, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_dice3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_dice2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_dice4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_dice3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_dice2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_dice4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -236,5 +286,8 @@ public class GameScreen extends javax.swing.JFrame {
     private javax.swing.JButton btn_dice4;
     private javax.swing.JButton btn_dice5;
     private javax.swing.JButton btn_roll;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable score_table;
     // End of variables declaration//GEN-END:variables
 }
