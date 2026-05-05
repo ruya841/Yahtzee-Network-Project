@@ -4,8 +4,6 @@
 
 package com.mycompany.yahtzee_networkproject;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author USER

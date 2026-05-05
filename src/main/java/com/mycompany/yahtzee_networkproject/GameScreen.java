@@ -17,6 +17,7 @@ public class GameScreen extends javax.swing.JFrame {
     GameLogic game = new GameLogic();
     //if i create it in constructor roll_btn can not reach 
     JButton[]buttons;
+     int pendingRow = -1;
     //hold selected buttons 
     public void selectedButtons() {
         for (int i = 0; i < buttons.length; i++) {
@@ -36,7 +37,6 @@ public class GameScreen extends javax.swing.JFrame {
             });
         }
     }
-    
     /**
      * Creates new form GameScreen
      */
@@ -45,9 +45,40 @@ public class GameScreen extends javax.swing.JFrame {
        buttons=new JButton[]{btn_dice1,btn_dice2,btn_dice3,btn_dice4,btn_dice5};
        selectedButtons();
        DefaultTableModel tableModel = (DefaultTableModel)score_table.getModel();//take a copy from my table
+       //------------------------------------------------------------------------------------------------------------------
+       score_table.getSelectionModel().addListSelectionListener(e -> {
+        int selectedRow = score_table.getSelectedRow();
+        //if the user selected sum,bonus or total ignore don't store the score
+       if(selectedRow==6 ||selectedRow==7||selectedRow==15 ){
+           return;
+       }
+       //if the user selected upper section(ones,twos..) the score index same otherwise -2 because sum and bonus toke the plase
+       //for example three a kind is 8 but -2 cause sum and bonus doesn't count
+       int scoreIndex;
+       if(selectedRow<6){
+           scoreIndex=selectedRow;
+       }else{
+           scoreIndex=selectedRow-2;
+       }
+         if(!game.used_score[scoreIndex]){
+             //*******tableModel.setValueAt(count_score[0], 0, 1);
+            // احفظي الدرجة
+        game.score[scoreIndex] = game.calculateAllScores()[scoreIndex];
+        game.used_score[scoreIndex] = true;
+        
+        // ثبتي الدرجة في الجدول
+        DefaultTableModel model = (DefaultTableModel) score_table.getModel();
+        model.setValueAt(game.score[scoreIndex], selectedRow, 1);
+        
+        //if the user selected a score صفري العداد و افتحي الزر يبدأ من الاول علشان الاعب الثاني
+        //مؤقت المفروض يقفلها عندي وقفتحها عند اللاعب الي عليه الدور 
+                 btn_roll.setEnabled(false);
+            game.rollcounter=0;
+         }
+
+    });
+       //------------------------------------------------------------------------------------------------------------------------
     }
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,6 +97,7 @@ public class GameScreen extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         score_table = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
+        btn_confirm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
@@ -132,7 +164,7 @@ public class GameScreen extends javax.swing.JFrame {
                 {"Large straight", null, null},
                 {"Chance", null, null},
                 {"Yahtzee", null, null},
-                {null, null, null}
+                {"Total", null, null}
             },
             new String [] {
                 "Rolls", "Player1", "Player2"
@@ -143,9 +175,17 @@ public class GameScreen extends javax.swing.JFrame {
         score_table.setGridColor(new java.awt.Color(255, 255, 255));
         score_table.setName(""); // NOI18N
         score_table.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        score_table.setSelectionForeground(new java.awt.Color(0, 0, 51));
         jScrollPane1.setViewportView(score_table);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_confirm.setText("Confirm");
+        btn_confirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_confirmActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,34 +193,38 @@ public class GameScreen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_dice2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_dice3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_dice4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                        .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_dice2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_dice3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_dice4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_dice1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_dice3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,8 +232,10 @@ public class GameScreen extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_dice4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_dice5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_roll, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
 
@@ -233,6 +279,22 @@ public class GameScreen extends javax.swing.JFrame {
             btn_roll.setEnabled(false);
             }
         }
+        //present the score on the table(ignore sum,bonus, and total rows)
+        int[] count_score=game.calculateAllScores();
+        DefaultTableModel tableModel = (DefaultTableModel)score_table.getModel();//take a copy from my table
+        tableModel.setValueAt(count_score[0],0,1);
+        tableModel.setValueAt(count_score[1],1,1);
+        tableModel.setValueAt(count_score[2],2,1);
+        tableModel.setValueAt(count_score[3],3,1);
+        tableModel.setValueAt(count_score[4],4,1);
+        tableModel.setValueAt(count_score[5],5,1);
+        tableModel.setValueAt(count_score[6],8,1);
+        tableModel.setValueAt(count_score[7],9,1);
+        tableModel.setValueAt(count_score[8],10,1);
+        tableModel.setValueAt(count_score[9],11,1);
+        tableModel.setValueAt(count_score[10],12,1);
+        tableModel.setValueAt(count_score[11],13,1);
+        tableModel.setValueAt(count_score[12],14,1);
         //when all dices seleced client can't press roll button again
         boolean allHeld=true;
         for (int i = 0; i < game.dice.held.length; i++) {
@@ -244,6 +306,15 @@ public class GameScreen extends javax.swing.JFrame {
             btn_roll.setEnabled(false);
         }
     }//GEN-LAST:event_btn_rollActionPerformed
+    //لتأكيد الاختيار
+    private void btn_confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmActionPerformed
+        // TODO add your handling code here:
+         DefaultTableModel tableModel = (DefaultTableModel)score_table.getModel();//take a copy from my table
+       //------------------------------------------------------------------------------------------------------------------
+       score_table.getSelectionModel().addListSelectionListener(e -> {
+         pendingRow= score_table.getSelectedRow();
+       });
+    }//GEN-LAST:event_btn_confirmActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,6 +351,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_confirm;
     private javax.swing.JButton btn_dice1;
     private javax.swing.JButton btn_dice2;
     private javax.swing.JButton btn_dice3;
