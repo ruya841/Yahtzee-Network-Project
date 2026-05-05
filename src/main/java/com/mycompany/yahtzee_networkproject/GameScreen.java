@@ -17,7 +17,7 @@ public class GameScreen extends javax.swing.JFrame {
     GameLogic game = new GameLogic();
     //if i create it in constructor roll_btn can not reach 
     JButton[]buttons;
-     int pendingRow = -1;
+     int selectedRow = -1;
     //hold selected buttons 
     public void selectedButtons() {
         for (int i = 0; i < buttons.length; i++) {
@@ -48,36 +48,7 @@ public class GameScreen extends javax.swing.JFrame {
        //------------------------------------------------------------------------------------------------------------------
        score_table.getSelectionModel().addListSelectionListener(e -> {
         int selectedRow = score_table.getSelectedRow();
-        //if the user selected sum,bonus or total ignore don't store the score
-       if(selectedRow==6 ||selectedRow==7||selectedRow==15 ){
-           return;
-       }
-       //if the user selected upper section(ones,twos..) the score index same otherwise -2 because sum and bonus toke the plase
-       //for example three a kind is 8 but -2 cause sum and bonus doesn't count
-       int scoreIndex;
-       if(selectedRow<6){
-           scoreIndex=selectedRow;
-       }else{
-           scoreIndex=selectedRow-2;
-       }
-         if(!game.used_score[scoreIndex]){
-             //*******tableModel.setValueAt(count_score[0], 0, 1);
-            // احفظي الدرجة
-        game.score[scoreIndex] = game.calculateAllScores()[scoreIndex];
-        game.used_score[scoreIndex] = true;
-        
-        // ثبتي الدرجة في الجدول
-        DefaultTableModel model = (DefaultTableModel) score_table.getModel();
-        model.setValueAt(game.score[scoreIndex], selectedRow, 1);
-        
-        //if the user selected a score صفري العداد و افتحي الزر يبدأ من الاول علشان الاعب الثاني
-        //مؤقت المفروض يقفلها عندي وقفتحها عند اللاعب الي عليه الدور 
-                 btn_roll.setEnabled(false);
-            game.rollcounter=0;
-         }
-
-    });
-       //------------------------------------------------------------------------------------------------------------------------
+             });
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -306,14 +277,38 @@ public class GameScreen extends javax.swing.JFrame {
             btn_roll.setEnabled(false);
         }
     }//GEN-LAST:event_btn_rollActionPerformed
-    //لتأكيد الاختيار
+    //لتأكيد الاختيار يتحقق من كل الشروط قبل تسجيل الاختيار
     private void btn_confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmActionPerformed
-        // TODO add your handling code here:
-         DefaultTableModel tableModel = (DefaultTableModel)score_table.getModel();//take a copy from my table
-       //------------------------------------------------------------------------------------------------------------------
-       score_table.getSelectionModel().addListSelectionListener(e -> {
-         pendingRow= score_table.getSelectedRow();
-       });
+
+           //if the user selected sum,bonus or total ignore don't store the score
+       if(selectedRow==6 ||selectedRow==7||selectedRow==15 ){
+           return;
+       }
+       //if the user selected upper section(ones,twos..) the score index same otherwise -2 because sum and bonus toke the plase
+       //for example three a kind is 8 but -2 cause sum and bonus doesn't count
+       int scoreIndex;
+       if(selectedRow<6){
+           scoreIndex=selectedRow;
+       }else{
+           scoreIndex=selectedRow-2;
+       }
+       //game.rollcounter > 0 بتمنعي اللاعب من تسجيل درجة قبل ما يلف النرد خالص
+       //!game.used_score[scoreIndex] يتأكد الخانه فاضيه
+         if(!game.used_score[scoreIndex]&&game.rollcounter > 0){
+             //تسجيل النتيحه
+        game.score[scoreIndex] = game.calculateAllScores()[scoreIndex];
+        game.used_score[scoreIndex] = true;
+        
+        // ثبتي الدرجة في الجدول
+        DefaultTableModel model = (DefaultTableModel) score_table.getModel();
+        model.setValueAt(game.score[scoreIndex], selectedRow, 1);
+        
+        //if the user selected a score صفري العداد و افتحي الزر يبدأ من الاول علشان الاعب الثاني
+        //مؤقت المفروض يقفلها عندي وقفتحها عند اللاعب الي عليه الدور 
+                 btn_roll.setEnabled(false);
+            game.rollcounter=0;
+         }
+       //------------------------------------------------------------------------------------------------------------------------
     }//GEN-LAST:event_btn_confirmActionPerformed
 
     /**
