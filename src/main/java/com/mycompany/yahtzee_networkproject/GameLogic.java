@@ -14,6 +14,7 @@ public class GameLogic {
     String[] Categories={"Ones","Twos","Threes","Fours","Fives","Sixes",
             "Three of a kind","Four of a kind","Full house","Small straight","Large straight","Chance","Yahtzee"};
     int []score=new int[13];
+    //in confirm button
     boolean[] used_score=new boolean[13];
     
 //all dices should roll only 5 times
@@ -123,6 +124,8 @@ public class GameLogic {
     }
     //small straight(4)==1,2,3,4 or 2,3,4,5 or 3,4,5,6.
     //large straight(5)==1,2,3,4,5 or 2,3,4,5,6
+    // لازم اتحقق مرتين برا و جوا اللوب قبل ما اصفر الستريك لان ممكن يكون 
+    //[1,1,1,1,1,0]-> normally if we didn't check inside the loop he will find 0 but we reached streak 5
     public int Calculate_straights(int type){//small straight(4) or large straight(5)
      int score=0;
      int streak=0;
@@ -133,15 +136,16 @@ public class GameLogic {
         for (int i = 0; i < result.length; i++) {
             if(result[i]>0){// if =0 then doesn't appear
                 streak+=1;
-            }else{
-                if(streak >=4){
-                   score=30; 
-                }else if(streak >=5){
-                  score=40;  
+            }else{// قبل ما اصفر الستريك لازم اتأكد لو وصلت للتجميعه
+                if (streak >= 5) {
+                    score = 40;
+                } else if (streak >= 4) {
+                    score = 30;
                 }
                 streak=0;//بدونها مش هتبقا متسلسله لازم اول ما يفك التسلسل ابدأ من جديد 
             }
         }
+        
         if(streak >=4 && type==4){
             score=30;
         }
