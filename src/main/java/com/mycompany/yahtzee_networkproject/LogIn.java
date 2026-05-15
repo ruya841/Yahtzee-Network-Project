@@ -4,7 +4,8 @@
  */
 package com.mycompany.yahtzee_networkproject;
 
-import java.awt.Color;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +13,21 @@ import javax.swing.JOptionPane;
  * @author USER
  */
 public class LogIn extends javax.swing.JFrame {
-    String playerName;
+    NetworkManager network=new NetworkManager();
     /**
      * Creates new form LogIn
      */
     public LogIn() {
         initComponents();
+        ImageIcon iconn = new ImageIcon(getClass().getResource("/images/login.png"));
+
+        Image imgee = iconn.getImage().getScaledInstance(
+                jLabel3.getWidth(),
+                jLabel3.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        jLabel3.setIcon(new ImageIcon(imgee));
     }
 
     /**
@@ -29,35 +39,42 @@ public class LogIn extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jPanel1 = new javax.swing.JPanel();
         txt_name = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        label_rules = new javax.swing.JLabel();
-        label_strategy = new javax.swing.JLabel();
         btn_start = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        label_strategy = new javax.swing.JLabel();
+        label_rules = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jInternalFrame1.setVisible(true);
+        jPanel1.setBackground(new java.awt.Color(0, 0, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_name.setForeground(new java.awt.Color(153, 153, 153));
+        txt_name.setBackground(new java.awt.Color(204, 204, 204));
+        txt_name.setFont(new java.awt.Font("Snap ITC", 0, 12)); // NOI18N
+        txt_name.setForeground(new java.awt.Color(0, 153, 0));
+        txt_name.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_name.setBorder(null);
         txt_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nameActionPerformed(evt);
             }
         });
+        jPanel1.add(txt_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, 210, 30));
 
-        jLabel1.setText("Yahtzee ");
-
-        label_rules.setForeground(new java.awt.Color(0, 0, 204));
-        label_rules.setText("How to play");
-        label_rules.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                label_rulesMouseClicked(evt);
+        btn_start.setBackground(new java.awt.Color(244, 241, 187));
+        btn_start.setFont(new java.awt.Font("Snap ITC", 0, 14)); // NOI18N
+        btn_start.setForeground(new java.awt.Color(246, 185, 202));
+        btn_start.setText("START");
+        btn_start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_startActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_start, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 400, 40));
 
+        label_strategy.setFont(new java.awt.Font("Snap ITC", 2, 14)); // NOI18N
         label_strategy.setForeground(new java.awt.Color(0, 0, 204));
         label_strategy.setText("Strategy tips");
         label_strategy.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -65,109 +82,108 @@ public class LogIn extends javax.swing.JFrame {
                 label_strategyMouseClicked(evt);
             }
         });
+        jPanel1.add(label_strategy, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 120, 30));
 
-        btn_start.setText("START");
-        btn_start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_startActionPerformed(evt);
+        label_rules.setFont(new java.awt.Font("Snap ITC", 2, 14)); // NOI18N
+        label_rules.setForeground(new java.awt.Color(0, 0, 204));
+        label_rules.setText("How to play");
+        label_rules.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        label_rules.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_rulesMouseClicked(evt);
             }
         });
+        jPanel1.add(label_rules, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 110, 20));
 
-        jLabel2.setText("User Name:");
-
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
-                        .addComponent(jLabel1))
-                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
-                                    .addComponent(label_rules)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
-                                    .addComponent(label_strategy)
-                                    .addGap(10, 10, 10))
-                                .addComponent(txt_name)
-                                .addComponent(btn_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(72, Short.MAX_VALUE))
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel1)
-                .addGap(22, 22, 22)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_rules)
-                    .addComponent(label_strategy))
-                .addGap(18, 18, 18)
-                .addComponent(btn_start)
-                .addContainerGap(40, Short.MAX_VALUE))
-        );
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.png"))); // NOI18N
+        jLabel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.gray, java.awt.Color.gray));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-70, -20, 800, 480));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nameActionPerformed
-        // TODO add your handling code here:
-        playerName=txt_name.getText();
-        
-    }//GEN-LAST:event_txt_nameActionPerformed
-
     private void btn_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_startActionPerformed
-        // TODO add your handling code here:
-        //trim()- remove spaces
-        if(!txt_name.getText().trim().isEmpty()){
-            this.toBack();
-            GameScreen game1=new GameScreen();
-            game1.setVisible(true);
-            game1.toFront();
-        }else {
-            JOptionPane.showMessageDialog(this, "Please enter your name!", "Warning", JOptionPane.WARNING_MESSAGE);
+        //trim()-> remove spaces
+        if (!txt_name.getText().trim().isEmpty()) {
+            //if there is a name connect to the server and send the name then move to the next page
+            try {
+                network.connect("localhost", 5000);
+                network.sendMessage("NAME:" + txt_name.getText());
+
+                // اعرض رسالة الانتظار
+                btn_start.setEnabled(false);
+                btn_start.setText("Waiting...");
+
+                // استنى في Thread عشان مش يجمد الـ UI
+                new Thread(() -> {
+                    try {
+                        String message = network.receiveMessage(); // بيستنى "PLAYER:1" أو "PLAYER:2"
+
+                        if (message.startsWith("PLAYER:")) {
+                            javax.swing.SwingUtilities.invokeLater(() -> {
+                                // لاقى شريك! انتقل للـ GameScreen
+                                GameScreen game = new GameScreen(network, txt_name.getText());
+                                game.setVisible(true);
+                                this.dispose();
+                            });
+                        }
+                    } catch (Exception e) {
+                        javax.swing.SwingUtilities.invokeLater(() -> {
+                            JOptionPane.showMessageDialog(this,
+                                "Connection lost!",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                            btn_start.setEnabled(true);
+                            btn_start.setText("Join");
+                        });
+                    }
+                }).start();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                    "Can't connect to server!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this,"Please enter your name!","Warning",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btn_startActionPerformed
 
+    private void txt_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_nameActionPerformed
+
     private void label_rulesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_rulesMouseClicked
-            this.dispose();
-           Rules_page Rules=new Rules_page();
-            Rules.setVisible(true);
-            Rules.toFront();
+        this.dispose();
+        Rules_page Rules=new Rules_page();
+        Rules.setVisible(true);
+        Rules.toFront();
     }//GEN-LAST:event_label_rulesMouseClicked
 
     private void label_strategyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_strategyMouseClicked
         // TODO add your handling code here:
-            this.dispose();
-            Tips_page t1=new Tips_page();
-             t1.setVisible(true);
-             t1.toFront();
+        this.dispose();
+        Tips_page t1=new Tips_page();
+        t1.setVisible(true);
+        t1.toFront();
     }//GEN-LAST:event_label_strategyMouseClicked
 
     /**
@@ -207,9 +223,8 @@ public class LogIn extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_start;
-    private javax.swing.JInternalFrame jInternalFrame1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_rules;
     private javax.swing.JLabel label_strategy;
     private javax.swing.JTextField txt_name;

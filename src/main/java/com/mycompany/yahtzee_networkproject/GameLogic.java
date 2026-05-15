@@ -146,13 +146,21 @@ public class GameLogic {
             }
         }
         
-        if(streak >=4 && type==4){
-            score=30;
+        if( type==4){
+            if(score>=30){
+                return 30;
+            }else{
+                return 0;
+            }
         }
-        if(streak >=5 && type==5){//ممكن يعمل سلسله اطول من  خمس ارقام ورا بعض 
-            score=40;
+        if( type==5){//ممكن يعمل سلسله اطول من  خمس ارقام ورا بعض 
+            if(score==40){
+               return 40; 
+            }else{
+                return 0;
+            }
         }
-        return score;
+        return 0;
     }
     
     public int calculate_3_4_ofKind(int type){//to calculate three of kind ,four of kind
@@ -169,6 +177,31 @@ public class GameLogic {
             }
         }
         return score;
+    }
+    //check if upper section full call sum method 
+    public boolean isUpperSectionFull() {
+    for (int i = 0; i < 6; i++) {
+        if (!used_score[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+    //calculate bonus 
+    public int calculateBonus(){
+        if(isUpperSectionFull() &&calculateSum()>=63 ){
+            return 35;
+        }
+        return 0;
+    }
+    //create gameover to calculate total in the cofirm button
+    public boolean GameOver(){
+        for (int i = 0; i < used_score.length; i++) {
+            if(!used_score[i]){
+                return false;
+            }
+        }
+        return true;
     }
     
 }

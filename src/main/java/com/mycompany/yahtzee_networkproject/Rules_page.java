@@ -4,6 +4,9 @@
  */
 package com.mycompany.yahtzee_networkproject;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author USER
@@ -15,6 +18,14 @@ public class Rules_page extends javax.swing.JFrame {
      */
     public Rules_page() {
         initComponents();
+        ImageIcon iconn = new ImageIcon(getClass().getResource("/images/rule.png"));
+        Image imgee = iconn.getImage().getScaledInstance(
+                jLabel1.getWidth(),
+                jLabel1.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+        jLabel1.setIcon(new ImageIcon(imgee));
+        
         jTextArea1.setEditable(false);        // مينقدرش يعدل
         jTextArea1.setOpaque(false);          // نفس خلفية الـ JFrame
         jTextArea1.setLineWrap(true);         // يكمل في السطر الجاي
@@ -31,19 +42,28 @@ public class Rules_page extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         back_menu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jTextArea1.setRows(5);
-        jTextArea1.setText("Yahtzee Rules\nThe objective of YAHTZEE is to get as many points as possible by \nrolling five dice and getting certain combinations of dice.\n\nGameplay\nIn each turn a player may throw the dice up to three times. \nA player doesn't have to roll all five dice on the second and third throw of a round, \nhe may put as many dice as he wants to the side and only throw the ones that don't have the numbers \nhe's trying to get. For example, a player throws and gets 1,3,3,4,6. He decides he want to try for the large\nstraight, 1,2,3,4,5. So, he puts 1,3,4 to the side and only throws 3 and 6 again, hoping to get 2 and 5.\n\nIn this game you click on the dice you want to keep.They will be moved down and will \nnot be thrown the next time you press the 'Roll Dice' button. \nIf you decide after the second throw in a turn that you don't want to keep the same dice before\nthe third throw then you can click them again and they will move back to the table and be thrown in the third throw.\n\nUpper section combinations\nOnes: Get as many ones as possible.\nTwos: Get as many twos as possible.\nThrees: Get as many threes as possible.\nFours: Get as many fours as possible.\nFives: Get as many fives as possible.\nSixes: Get as many sixes as possible.\n\nLower section combinations\nThree of a kind: Get three dice with the same number. Points are the sum all dice (not just the three of a kind).\nFour of a kind: Get four dice with the same number. Points are the sum all dice (not just the four of a kind).\nFull house: Get three of a kind and a pair, e.g. 1,1,3,3,3 or 3,3,3,6,6. Scores 25 points.\nSmall straight: Get four sequential dice, 1,2,3,4 or 2,3,4,5 or 3,4,5,6. Scores 30 points.\nLarge straight: Get five sequential dice, 1,2,3,4,5 or 2,3,4,5,6. Scores 40 points.\nChance: You can put anything into chance, it's basically like a garbage can when you don't have anything else you can use the dice for. \nThe score is simply the sum of the dice.\nYAHTZEE: Five of a kind. Scores 50 points. You can optionally get multiple Yahtzees, see below for details.\n");
+        jTextArea1.setText("The objective of YAHTZEE is to get as many points as possible by \nrolling five dice and getting certain combinations of dice.\n\nGameplay\nIn each turn a player may throw the dice up to three times. \nA player doesn't have to roll all five dice on the second and third throw of a round, \nhe may put as many dice as he wants to the side and only throw the ones that don't have the numbers \nhe's trying to get. For example, a player throws and gets 1,3,3,4,6. He decides he want to try for the large\nstraight, 1,2,3,4,5. So, he puts 1,3,4 to the side and only throws 3 and 6 again, hoping to get 2 and 5.\n\nIn this game you click on the dice you want to keep.They will be moved down and will \nnot be thrown the next time you press the 'Roll Dice' button. \nIf you decide after the second throw in a turn that you don't want to keep the same dice before\nthe third throw then you can click them again and they will move back to the table and be thrown in the third throw.\n\nUpper section combinations\nOnes: Get as many ones as possible.\nTwos: Get as many twos as possible.\nThrees: Get as many threes as possible.\nFours: Get as many fours as possible.\nFives: Get as many fives as possible.\nSixes: Get as many sixes as possible.\n\nLower section combinations\nThree of a kind: Get three dice with the same number. Points are the sum all dice (not just the three of a kind).\nFour of a kind: Get four dice with the same number. Points are the sum all dice (not just the four of a kind).\nFull house: Get three of a kind and a pair, e.g. 1,1,3,3,3 or 3,3,3,6,6. Scores 25 points.\nSmall straight: Get four sequential dice, 1,2,3,4 or 2,3,4,5 or 3,4,5,6. Scores 30 points.\nLarge straight: Get five sequential dice, 1,2,3,4,5 or 2,3,4,5,6. Scores 40 points.\nChance: You can put anything into chance, it's basically like a garbage can when you don't have anything else you can use the dice for. \nThe score is simply the sum of the dice.\nYAHTZEE: Five of a kind. Scores 50 points. You can optionally get multiple Yahtzees, see below for details.\n");
         jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 600, 260));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rule.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 820, 500));
 
         jMenu1.setText("More");
 
@@ -63,17 +83,17 @@ public class Rules_page extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,8 +146,10 @@ public class Rules_page extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem back_menu;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
