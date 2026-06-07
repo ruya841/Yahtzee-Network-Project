@@ -5,12 +5,10 @@
 package com.mycompany.yahtzee_networkproject;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -49,16 +47,6 @@ public class GameScreen extends javax.swing.JFrame {
             });
         }
     ////------------------GUI-------------------
-//         ImageIcon icon = new ImageIcon(getClass().getResource("/images/wood.png"));
-//
-//        Image imgee = icon.getImage().getScaledInstance(
-//                jLabel2.getWidth(),
-//                jLabel2.getHeight(),
-//                Image.SCALE_SMOOTH
-//        );
-//
-//        jLabel2.setIcon(new ImageIcon(imgee));
-//        
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setBorderPainted(false);
             buttons[i].setContentAreaFilled(false); // ← المهم
@@ -232,7 +220,7 @@ public class GameScreen extends javax.swing.JFrame {
         } else if (message.startsWith("RESULT:")) {
             String result = message.substring(7);
                 javax.swing.SwingUtilities.invokeLater(() -> {
-                    this.toBack();
+                    this.dispose();
                     new End_page(result).setVisible(true);
                 });
             } else if (message.equals("OPPONENT_DISCONNECTED")) {

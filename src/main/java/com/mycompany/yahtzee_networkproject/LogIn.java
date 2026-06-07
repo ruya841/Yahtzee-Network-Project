@@ -124,7 +124,7 @@ public class LogIn extends javax.swing.JFrame {
         if (!txt_name.getText().trim().isEmpty()) {
             //if there is a name connect to the server and send the name then move to the next page
             try {
-                network.connect("localhost", 5000);
+                network.connect("16.170.245.33", 5000);
                 network.sendMessage("NAME:" + txt_name.getText());
 
                 // اعرض رسالة الانتظار
